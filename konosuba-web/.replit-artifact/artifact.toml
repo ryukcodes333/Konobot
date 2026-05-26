@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/konosuba-web/"
+title = "Konosuba Bot Dashboard"
+version = "1.0.0"
+id = "artifacts/konosuba-web"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/konosuba-web/" ]
+localPort = 23521
+
+[services.development]
+run = "pnpm --filter @workspace/konosuba-web run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/konosuba-web", "run", "build" ]
+publicDir = "artifacts/konosuba-web/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23521"
+BASE_PATH = "/konosuba-web/"
